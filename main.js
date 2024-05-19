@@ -2,27 +2,33 @@ objects = [];
 status = "";
 
 function preload() {
-
+    video = createVideo('video.mp4');
+    video.hide();
 }
+
 
 function setup() {
     canvas = createCanvas(450,450);
     canvas.center();
     video = createCapture(VIDEO);
-    video.size(450.450);
+    video.size(450,450);
     video.hide();
 }
 
-function ModelLoaded() {
-    console.log(Model loaded!);
+function draw() {
+    image(video, 0, 0, 500, 450);
+}
+
+function modelLoaded() {
+    console.log("Model loaded!");
     status = true;
 }
 
 function start() {
-    objectDetector = ml5.objectDetector('cocossd', ModelLoaded);
-    document.getElementById("status").innerHTML = "Status: Detecting Objects";
-    object_name = document.getElementById("object_name").value;
-}
+    objectDetector = ml5.objectDetector("cocossd", modelLoaded);
+    document.getElementById("status").innerHTML = 'Status: Detecting Objects';
+
+    }
 
 function gotResult(error, results) {
     if(error) {
@@ -32,7 +38,7 @@ function gotResult(error, results) {
     objects = results;
 }
 
-objects = results;
+
 function draw() {
 image (video, 0, 0, 450, 450);
 
@@ -48,13 +54,13 @@ noFill();
 stroke("#FF0000");
 rect(objects[i].x, objects[i].y, objects[i].width, objects[i].height);
 
-if (objects[i].label == object_name) {
+if (objects[i].label == objects-name) {
 video.stop();
 objectDetector.detect (gotResult);
-document.getElementById("object_status").innerHTML = object_name + Found";
+document.getElementById("object_status").innerHTML = object_name + "Found";
 
-synth window.speechSynthesis;
-utter This = new SpeechSynthesisUtterance (object-name "Found");
+synthwindow.speechSynthesis;
+utterThis = new SpeechSynthesisUtterance (object_name , "Found");
 synth.speak(utterThis);
 }
 else {
@@ -63,6 +69,4 @@ else {
 }
 }
 }
-
-
 
